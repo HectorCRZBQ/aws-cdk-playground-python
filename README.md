@@ -2,38 +2,97 @@
 
 El objetivo es preparar el entorno para trabajar con AWS CDK con Python.
 
+![image](/images/image10.png)
+
+
 ## Instalación y preparación de AWS CDK
 
 1. En caso de no tener nodejs, instalar con asdf:
-```bash
+   ```bash
+   # Descargamos el pluggin necesario
    asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+
+   # Instalamos la version 22.11.0 de nodejs
    asdf install nodejs 22.11.0
-```
+
+   # Revisamos la lista de elementos
+   asdf list
+   ```
+
+![image](/images/image1.png)
 
 3. Verificar la instalación:
    ```bash
+   # Instalamos aws-cdk
+   npm install -g aws-cdk
+
+   # Revisamos la instalación
    cdk --version
    ```
 
+![image](/images/image2.png)
+
 4. Preparar el directorio del proyecto:
    ```bash
+   # Creamos el nuevo directorio
    mkdir cdk-iam-lab
+
+   # Accedemos al nuevo directorio previamente creado
    cd cdk-iam-lab
    ```
+
+![image](/images/image3.png)
 
 5. Inicializar proyecto CDK con Python:
    ```bash
    cdk init app --language python
    ```
 
-6. Inicializad el entorno de CDK en vuestra cuenta de AWS:
+![image](/images/image4.png)
+
+6. Instalar dependencias del proyecto:
+   ```bash
+   # Creamos un entorno virtual de python
+   python3 -m venv .venv
+
+   # Iniciamos el entorno virtual
+   source .venv/bin/activate
+
+
+   # Instalamos las dependencias
+   pip install -r requirements.txt
+   ```
+
+![image](/images/image5.png)
+
+7. Inicializad el entorno de CDK en vuestra cuenta de AWS:
    ```bash
    cdk bootstrap
    ```
 
-7. Instalar dependencias del proyecto:
+![image](/images/image7.png)
+
+![image](/images/image8.png)
+
+
+*Posible error*
+
+![image](/images/image6.png)
+
+Se nos produce porque no estan configurados nuestros credenciales de AWS.
    ```bash
-   pip install -r requirements.txt
+   aws configure
+   ```
+   
+   ```bash
+   sudo apt  install awscli 
+   ```
+
+   ```bash
+   AWS Access Key ID: La que descargamos
+   AWS Secret Access Key: La que descargamos
+   Default region name: us-west-2 (Oregon)
+   Default output format: 
    ```
 
 ## Creación de Usuario IAM y Grupo con AWS CDK
@@ -61,16 +120,29 @@ El objetivo es crear un usuario IAM con permisos de PowerUserAccess usando CDK c
    ```bash
    cd ..
    cdk synth > cf.yaml
+
    ```
+
+![image](/images/image9.png)
+
 
 3. Desplegar la infraestructura:
    ```bash
    cdk deploy
    ```
 
+![image](/images/image10.png)
+
 4. Descomentad el output y volved a desplegar para ver un update.
 
+![image](/images/image11.png)
+
 5. Capturar los outputs del despliegue con los detalles del usuario
+
+![image](/images/image12.png)
+
+![image](/images/image13.png)
+
 
 6. Enviar un email al profesor con:
    - Captura del despliegue correcto

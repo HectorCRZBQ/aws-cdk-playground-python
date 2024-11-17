@@ -1,0 +1,44 @@
+Resources:
+  PowerUsersGroup21994209:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: power-users
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/PowerUserAccess
+    Metadata:
+      aws:cdk:path: CdkIamLabStack/PowerUsersGroup/Resource
+  PowerUser296D83CC:
+    Type: AWS::IAM::User
+    Properties:
+      Groups:
+        - Ref: PowerUsersGroup21994209
+      UserName: power-user-cdk
+    Metadata:
+      aws:cdk:path: CdkIamLabStack/PowerUser/Resource
+  PowerUserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName:
+        Ref: PowerUser296D83CC
+    Metadata:
+      aws:cdk:path: CdkIamLabStack/PowerUserAccessKey
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/zPSMzQz1zNUTCwv1k1OydbNyUzSqw4uSUzO1kksL47PTMzVq3Yvyi8t0HFOy4MwQotTi0A8GO2YnJxaXOydWlkL4vmXlhSUloBYQanF+aVFyam1OgGVJRn5efrGeoZGeuaKWcWZmbpFpXklmbmpekEQGgDgUqsxhwAAAA==
+    Metadata:
+      aws:cdk:path: CdkIamLabStack/CDKMetadata/Default
+Outputs:
+  AKIAZAI4GTYKCBCVNH7M:
+    Value:
+      Ref: PowerUserAccessKey
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+
